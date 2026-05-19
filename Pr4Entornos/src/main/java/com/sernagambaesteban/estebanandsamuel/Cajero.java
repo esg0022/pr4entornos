@@ -7,6 +7,9 @@ package com.sernagambaesteban.estebanandsamuel;
 import java.util.ArrayList;
 
 /**
+ * Representa a un cajero que gestiona productos, genera tickets
+ * y realiza el cierre de caja al final del día.
+ * Lleva un registro del número de tickets emitidos y del total facturado.
  *
  * @author loren
  */
@@ -68,11 +71,20 @@ public class Cajero {
         this.productos = productos;
     }
 
+    /** Nombre del cajero. */
     private String nombre;
+    /** Número de tickets emitidos. */
     private int cantidadTickets;
+    /** Total facturado en el día. */
     private double totalDias;
+    /** Lista de productos añadidos al ticket actual. */
     private ArrayList<Producto> productos;
     
+    /**
+     * Crea un nuevo cajero con su nombre identificativo.
+     *
+     * @param n nombre del cajero
+     */
     public Cajero(String n) {
         this.nombre = n;
         this.cantidadTickets = 0;
@@ -88,6 +100,11 @@ public class Cajero {
         getProductos().remove(producto);
     }
 
+    /**
+     * Calcula el importe total del ticket, imprime el recibo por consola
+     * y actualiza el total del día y el número de tickets emitidos.
+     * Después de cobrar, la lista de productos se vacía.
+     */
     public void cobrar() {
         double subtotal = 0;
         subtotal = calcularSubtotal(subtotal);
@@ -107,6 +124,7 @@ public class Cajero {
         getProductos().clear();
     }
 
+    
     private void imprimirLineasProductos() {
         for (Producto p : getProductos()) {
             System.out.println(p.getNombre() + " x" + p.getCantidad()
@@ -132,6 +150,10 @@ public class Cajero {
     }
     private static final double IVA = 0.21;
 
+    /**
+     * Muestra por consola un resumen del cierre de caja,
+     * incluyendo tickets emitidos, total facturado e IVA recaudado.
+     */
     public void cierreCaja() {
         double ivaRec = getTotalDias() - (getTotalDias() / (1 + IVA));
 
@@ -144,14 +166,29 @@ public class Cajero {
         System.out.println("==========================");
     }
 
+    /**
+     * Indica si el ticket actual no contiene productos.
+     *
+     * @return {@code true} si no hay productos, {@code false} en caso contrario
+     */
     public boolean ticketVacio() {
         return getProductos().isEmpty();
     }
 
+    /**
+     * Devuelve el número de tickets emitidos por el cajero.
+     *
+     * @return número de tickets emitidos
+     */
     public int getTicketsEmitidos() {
         return getCantidadTickets();
     }
 
+     /**
+     * Devuelve el total facturado en el día.
+     *
+     * @return total facturado
+     */
     public double getTotalDia() {
         return getTotalDias();
     }
